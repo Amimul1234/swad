@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>স্বাদের ম্যাপ — ৬৪ জেলার কয়টার বিখ্যাত খাবার খেয়েছেন?</title>
 <meta name="description" content="বগুড়ার দই থেকে নাটোরের কাঁচাগোল্লা — ৬৪ জেলার বিখ্যাত খাবারের কয়টা খেয়েছেন? টিক দিন, নিজের স্বাদের ম্যাপ বানিয়ে শেয়ার করুন।">
-<meta name="theme-color" content="#f4dfe0">
+<meta name="theme-color" content="#7a2412">
 <meta property="og:type" content="website">
 <meta property="og:title" content="৬৪ জেলার কয়টার বিখ্যাত খাবার খেয়েছেন?">
 <meta property="og:description" content="টিক দিন, নিজের স্বাদের ম্যাপ বানিয়ে শেয়ার করুন। লগইন লাগে না।">
@@ -19,90 +19,128 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wdth,wght@75..125,300..800&family=Tiro+Bangla&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wdth,wght@75..125,400..800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<div class="sheet">
-  <header class="mast">
-    <div class="mast-row">
-      <span class="memo-no">ক্যাশমেমো নং <b>০৬৪</b></span>
-      <span class="memo-date" id="today"></span>
-    </div>
-    <h1>স্বাদের ম্যাপ</h1>
-    <p class="mast-sub">৬৪ জেলার বিখ্যাত খাবারের কয়টা আপনার পেটে গেছে?</p>
+<header class="top">
+  <a class="brand" href="./">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12.5h16a8 8 0 0 1-16 0z"/><path d="M9 8.5c0-1.4 1-1.6 1-3M13 8.5c0-1.4 1-1.6 1-3"/></svg>
+    </span>
+    স্বাদের ম্যাপ
+  </a>
+  <a class="sister" href="https://bondhu.147.93.168.43.sslip.io/">বন্ধুর ম্যাপ</a>
+</header>
+
+<main class="wrap">
+  <section class="hero" aria-labelledby="h1">
+    <svg class="hero-map" id="heroMap" aria-hidden="true"></svg>
+    <span class="hero-tag">৬৪ জেলা · ৮ বিভাগ</span>
+    <h1 id="h1">৬৪ জেলার কয়টার বিখ্যাত <em>খাবার</em> খেয়েছেন?</h1>
+    <p class="hero-sub">জেলা ঘোরা লাগবে না, খাবারটা খেলেই হবে। যেগুলো খেয়েছেন বেছে নিন, তারপর নিজের স্বাদের ম্যাপটা শেয়ার করুন।</p>
+    <a class="pill-cta" href="#pick">খাবার বাছাই শুরু করুন
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </a>
+    <ol class="steps">
+      <li><span>১</span>খাবার বাছাই করুন</li>
+      <li><span>২</span>থিম আর ছবি দিন</li>
+      <li><span>৩</span>শেয়ার করে স্কোর মেলান</li>
+    </ol>
     <div class="friend" id="friend" hidden></div>
-  </header>
+  </section>
 
-  <section class="tally" aria-live="polite">
-    <div class="tally-num"><span id="count">০</span><small>/৬৪</small></div>
-    <div class="tally-side">
-      <div class="tally-title" id="rank">এখনো খাতা খালি</div>
-      <div class="tally-bar"><i id="bar"></i></div>
+  <section class="card pick" id="pick" aria-labelledby="pickTitle">
+    <div class="card-head">
+      <h2 id="pickTitle">যেসব খাবার খেয়েছি</h2>
+      <span class="badge"><b id="count">০</b> / ৬৪</span>
     </div>
-  </section>
-
-  <section class="map-wrap">
-    <p class="hint">যে জেলার খাবার খেয়েছেন, ম্যাপে সেই জেলায় চাপুন — অথবা নিচের তালিকায় টিক দিন</p>
-    <svg id="map" role="group" aria-label="বাংলাদেশের ৬৪ জেলার ম্যাপ"></svg>
-    <div class="peek" id="peek" hidden></div>
-  </section>
-
-  <aside class="ad" data-slot="mid" hidden></aside>
-
-  <section class="ledger">
-    <div class="ledger-head">
-      <label class="search">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>
-        <input id="q" type="search" placeholder="জেলা বা খাবার খুঁজুন" autocomplete="off">
-      </label>
+    <label class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>
+      <input id="q" type="search" placeholder="জেলা বা খাবার খুঁজুন…" autocomplete="off" aria-label="জেলা বা খাবার খুঁজুন">
+    </label>
+    <div class="quick">
+      <button class="text-btn" id="clear" type="button">সব মুছুন</button>
     </div>
     <div id="list"></div>
   </section>
 
+  <section class="card make" aria-labelledby="makeTitle">
+    <div class="card-head">
+      <h2 id="makeTitle">আপনার ম্যাপ</h2>
+      <span class="rank" id="rank">খাতা এখনো খালি</span>
+    </div>
+
+    <div class="themes" role="radiogroup" aria-label="থিম">
+      <span class="themes-label">থিম</span>
+      <div class="swatches" id="swatches"></div>
+    </div>
+
+    <div class="who">
+      <label class="photo-btn">
+        <input id="photo" type="file" accept="image/*" hidden>
+        <span class="photo-face" id="face" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.6"/><path d="M5 19.5c1.4-3.2 4-4.6 7-4.6s5.6 1.4 7 4.6"/></svg>
+        </span>
+        <span id="photoLabel">আপনার ছবি যোগ করুন</span>
+      </label>
+      <input class="name" id="name" maxlength="28" placeholder="আপনার নাম (ঐচ্ছিক)" autocomplete="name" aria-label="আপনার নাম">
+    </div>
+
+    <figure class="preview" id="preview">
+      <div class="pv-top">
+        <span class="pv-kicker">৬৪ জেলার বিখ্যাত খাবার — কয়টা খেয়েছি</span>
+        <span class="pv-title">স্বাদের ম্যাপ</span>
+      </div>
+      <div class="pv-body">
+        <svg id="map" role="group" aria-label="বাংলাদেশের ৬৪ জেলার ম্যাপ — জেলায় চাপ দিলে বাছাই হবে"></svg>
+        <div class="pv-stats">
+          <div class="pv-face" id="pvFace" hidden></div>
+          <div class="pv-name" id="pvName">আমি</div>
+          <div class="pv-num"><b id="pvCount">০</b><span>/৬৪</span></div>
+          <div class="pv-rank" id="pvRank">খাতা এখনো খালি</div>
+        </div>
+      </div>
+      <div class="peek" id="peek" hidden></div>
+      <figcaption class="pv-foot"><span>আপনি কয়টা খেয়েছেন?</span><span class="pv-site">swad.147.93.168.43.sslip.io</span></figcaption>
+    </figure>
+    <p class="tip">টিপস: ম্যাপের জেলায় সরাসরি চাপ দিয়েও বাছাই করতে পারেন।</p>
+
+    <h3 class="sub-h">ম্যাপটা শেয়ার করুন</h3>
+    <div class="actions">
+      <button class="primary" id="share" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 8.5L12 4l4.5 4.5M5 13.5V18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4.5"/></svg>
+        শেয়ার করুন
+      </button>
+      <button class="ghost" id="save" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/></svg>
+        ছবি নামান
+      </button>
+      <button class="ghost" id="copy" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+        লিংক কপি
+      </button>
+    </div>
+    <img class="longpress" id="out" alt="আপনার স্বাদের ম্যাপের ছবি — চেপে ধরে সেভ করুন" hidden>
+    <p class="tip" id="lpTip" hidden>ডাউনলোড না হলে উপরের ছবিতে চেপে ধরে সেভ করুন।</p>
+
+    <aside class="ad" data-slot="mid" hidden></aside>
+  </section>
+
   <footer class="foot">
-    <button class="link" id="clear" type="button">সব টিক মুছে নতুন করে শুরু করুন</button>
-    <p>প্রতিটা জেলার একটা খাবার — অনেক জেলার আরও আছে, জানি। তথ্যে ভুল পেলে জানান।</p>
-    <p>ম্যাপ: BBS / OCHA (geoBoundaries, CC BY 3.0 IGO)</p>
+    <p>প্রতিটা জেলার একটা খাবার — অনেক জেলার আরও আছে, জানি। তথ্যে ভুল পেলে জানান। আপনার নাম বা টিক কোথাও জমা হয় না।</p>
+    <p>ভাবনাটা এসেছে Sabbir Hossien Robin-এর <a href="https://unseenbangladesh.com/">আনসিন বাংলাদেশ</a> দেখে। আরও খেলুন: <a href="https://bondhu.147.93.168.43.sslip.io/">বন্ধুর ম্যাপ — কয় জেলায় আপনার বন্ধু আছে?</a></p>
+    <aside class="ad" data-slot="sheet" hidden></aside>
+    <p class="credit">ম্যাপ: BBS / OCHA (geoBoundaries, CC BY 3.0 IGO)</p>
   </footer>
-</div>
+</main>
 
-<div class="dock">
-  <button class="stamp-btn" id="make" type="button">
-    <span id="makeLabel">আমার কার্ড বানাই</span>
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-  </button>
+<div class="dock" id="dock" hidden>
+  <div class="dock-in">
+    <span class="dock-count"><b id="dockCount">০</b>/৬৪ খাবার খেয়েছি</span>
+    <button class="dock-btn" id="dockShare" type="button">শেয়ার করুন</button>
+  </div>
 </div>
-
-<dialog id="sheet" class="card-sheet">
-  <form method="dialog" class="sheet-top">
-    <b>আপনার স্বাদের কার্ড</b>
-    <button class="x" aria-label="বন্ধ করুন">
-      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-  </form>
-  <div class="fields">
-    <label class="field">
-      <span>নাম</span>
-      <input id="name" maxlength="28" placeholder="আপনার নাম" autocomplete="name">
-    </label>
-    <label class="photo">
-      <input id="photo" type="file" accept="image/*" hidden>
-      <span class="photo-face" id="face">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="3.6"/><path d="M5 19.5c1.4-3.2 4-4.6 7-4.6s5.6 1.4 7 4.6"/></svg>
-      </span>
-      <span>ছবি</span>
-    </label>
-  </div>
-  <div class="preview"><img id="out" alt="আপনার স্বাদের কার্ড"></div>
-  <p class="save-hint" id="saveHint">ছবিতে চেপে ধরে রাখলেও সেভ হবে</p>
-  <div class="actions">
-    <button class="stamp-btn" id="share" type="button">শেয়ার করুন</button>
-    <button class="ghost wide" id="save" type="button">ডাউনলোড</button>
-    <button class="ghost wide" id="copy" type="button">লিংক কপি</button>
-  </div>
-  <aside class="ad" data-slot="sheet" hidden></aside>
-</dialog>
 
 <div class="toast" id="toast" role="status"></div>
 
