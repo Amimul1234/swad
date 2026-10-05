@@ -7,6 +7,7 @@
   const $ = id => document.getElementById(id);
 
   const bn = n => String(n).replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+  const clean = v => typeof v === "string" ? [...v.replace(/[\p{Cc}\u061C\u200E\u200F\u202A-\u202E\u2066-\u2069\u2028\u2029\uFEFF]/gu, "").replace(/\s+/g, " ").trim()].slice(0, 28).join("") : "";
 
   const RANKS = [
     [0, "এখনো খাতা খালি"],
@@ -21,8 +22,9 @@
 
   const load = () => {
     try {
-      const v = JSON.parse(localStorage.getItem(STORE) || "{}");
-      return { eaten: new Set((v.eaten || []).filter(k => BY[k])), name: v.name || "" };
+      const v = JSON.parse(localStorage.getItem(STORE) || "{}") || {};
+      const eaten = Array.isArray(v.eaten) ? v.eaten.filter(k => typeof k === "string" && Object.prototype.hasOwnProperty.call(BY, k)) : [];
+      return { eaten: new Set(eaten), name: clean(v.name) };
     } catch { return { eaten: new Set(), name: "" }; }
   };
   const state = load();
@@ -37,6 +39,7 @@
   };
   const decode = s => {
     const out = new Set();
+    if (typeof s !== "string" || !/^[0-9a-z]{1,13}$/i.test(s)) return out;
     try {
       let n = [...s].reduce((a, c) => a * 36n + BigInt(parseInt(c, 36)), 0n);
       KEYS.forEach((k, i) => { if ((n >> BigInt(i)) & 1n) out.add(k); });
@@ -185,7 +188,7 @@
   const params = new URLSearchParams(location.search);
   if (params.has("m")) {
     const theirs = decode(params.get("m"));
-    const who = (params.get("n") || "").slice(0, 28) || "আপনার বন্ধু";
+    const who = clean(params.get("n")) || "আপনার বন্ধু";
     const el = $("friend");
     const b = document.createElement("b");
     b.textContent = who;
@@ -386,22 +389,33 @@
   });
   let nameT;
   $("name").addEventListener("input", e => {
-    state.name = e.target.value.trim();
+    state.name = clean(e.target.value);
     save();
     clearTimeout(nameT);
     nameT = setTimeout(render, 250);
   });
+  let photoUrl = null;
   $("photo").addEventListener("change", async e => {
     const file = e.target.files && e.target.files[0];
-    if (!file) return;
+    e.target.value = "";
+    if (!file || !/^image\//.test(file.type) || file.size > 25e6) {
+      if (file) toast("এই ফাইলটা ছবি হিসেবে খোলা গেল না");
+      return;
+    }
     const url = URL.createObjectURL(file);
     const img = new Image();
     img.onload = async () => {
+      if (photoUrl) URL.revokeObjectURL(photoUrl);
+      photoUrl = url;
       photo = img;
       const face = $("face");
       face.style.backgroundImage = `url("${url}")`;
       face.classList.add("has");
       await render();
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      toast("এই ফাইলটা ছবি হিসেবে খোলা গেল না");
     };
     img.src = url;
   });
