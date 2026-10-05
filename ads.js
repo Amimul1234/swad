@@ -1,5 +1,7 @@
 const ADS = {
-  adsterra: { mid: "848ce651b8098d29f37b476856567acd", sheet: "29636748a37573a209d9713a0131f039" },
+  adsterra: location.hostname === "amimul1234.github.io"
+    ? { mid: "848ce651b8098d29f37b476856567acd", sheet: "29636748a37573a209d9713a0131f039" }
+    : { mid: "13b52d92fef7396f2574a8e203b8bf74", sheet: "e2563aa2b8777d63edd474ecda452cb9" },
   adsense: { client: "", mid: "", sheet: "" },
   house: {
     title: "আপনার জেলার মিষ্টির দোকান বা ব্র্যান্ড এখানে",

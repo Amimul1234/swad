@@ -1,5 +1,5 @@
 (() => {
-  const SITE = "amimul1234.github.io/swad";
+  const SITE = location.hostname === "amimul1234.github.io" ? "amimul1234.github.io/swad" : "swad.147.93.168.43.sslip.io";
   const STORE = "swad:v1";
   const DIVS = ["ঢাকা", "চট্টগ্রাম", "রাজশাহী", "খুলনা", "বরিশাল", "সিলেট", "রংপুর", "ময়মনসিংহ"];
   const KEYS = Object.keys(MAP.d).sort();
