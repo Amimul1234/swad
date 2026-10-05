@@ -1,7 +1,5 @@
 const ADS = {
-  adsterra: location.hostname === "amimul1234.github.io"
-    ? { mid: "848ce651b8098d29f37b476856567acd", sheet: "29636748a37573a209d9713a0131f039" }
-    : { mid: "13b52d92fef7396f2574a8e203b8bf74", sheet: "e2563aa2b8777d63edd474ecda452cb9" },
+  adsterra: { mid: "13b52d92fef7396f2574a8e203b8bf74", sheet: "e2563aa2b8777d63edd474ecda452cb9" },
   adsense: { client: "", mid: "", sheet: "" },
   house: {
     title: "আপনার জেলার মিষ্টির দোকান বা ব্র্যান্ড এখানে",
@@ -21,8 +19,8 @@ const ADS = {
     f.loading = "lazy";
     f.title = "বিজ্ঞাপন";
     f.referrerPolicy = "origin";
-    f.setAttribute("sandbox", "allow-scripts allow-popups allow-popups-to-escape-sandbox");
-    f.src = "tile.html#" + new URLSearchParams({ k: key, w, h });
+    f.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox");
+    f.src = "https://ad.swad.147.93.168.43.sslip.io/tile.html#" + new URLSearchParams({ k: key, w, h });
     el.appendChild(f);
     return true;
   };
