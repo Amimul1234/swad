@@ -208,7 +208,8 @@
   };
   paint();
 
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(location.hash.slice(1) || location.search);
+  if (location.search) history.replaceState(null, "", location.pathname + (params.has("m") ? "#" + params : ""));
   if (params.has("m")) {
     friend = { who: clean(params.get("n")) || "আপনার বন্ধু", set: decode(params.get("m")) };
     renderFriend();
@@ -224,8 +225,9 @@
 
   const shareUrl = () => {
     const u = new URL("https://" + SITE + "/");
-    u.searchParams.set("m", encode(state.eaten));
-    if (state.name) u.searchParams.set("n", state.name);
+    const h = new URLSearchParams({ m: encode(state.eaten) });
+    if (state.name) h.set("n", state.name);
+    u.hash = h.toString();
     return u.toString();
   };
 
