@@ -120,6 +120,7 @@ button, input { font: inherit; color: inherit; }
   background: var(--stamp-wash);
 }
 .friend b { font-weight: 700; }
+.friend small { display: block; margin-top: 4px; font-size: var(--t-xs); opacity: .85; }
 
 .tally {
   display: flex;

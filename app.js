@@ -165,10 +165,33 @@
     paint();
   });
 
+  let friend = null;
+  const renderFriend = () => {
+    if (!friend) return;
+    const el = $("friend");
+    const mine = state.eaten.size, theirs = friend.set.size;
+    const both = [...friend.set].filter(k => state.eaten.has(k)).length;
+    let line;
+    if (!mine) line = ` ৬৪ জেলার ${bn(theirs)}টার বিখ্যাত খাবার খেয়েছে। আপনি কয়টা? টিক দিয়ে দেখুন।`;
+    else if (mine > theirs) line = ` ${bn(theirs)}টা, আপনি ${bn(mine)}টা — আপনি ${bn(mine - theirs)}টা এগিয়ে। কার্ড বানিয়ে দেখিয়ে দিন।`;
+    else if (mine < theirs) line = ` ${bn(theirs)}টা, আপনি ${bn(mine)}টা — আর ${bn(theirs - mine)}টা হলেই সমান।`;
+    else line = ` আর আপনি সমান সমান — দুজনেই ${bn(mine)}টা।`;
+    const b = document.createElement("b");
+    b.textContent = friend.who;
+    el.replaceChildren(b, document.createTextNode(line));
+    if (mine && both) {
+      const s = document.createElement("small");
+      s.textContent = `দুজনেই খেয়েছেন ${bn(both)}টা`;
+      el.appendChild(s);
+    }
+    el.hidden = false;
+  };
+
   const paint = () => {
     const n = state.eaten.size;
     $("count").textContent = bn(n);
     $("rank").textContent = rankOf(n);
+    renderFriend();
     $("bar").style.width = (n / 64 * 100) + "%";
     $("make").disabled = n === 0;
     $("makeLabel").textContent = n ? `আমার কার্ড বানাই · ${bn(n)}/৬৪` : "আগে অন্তত একটা টিক দিন";
@@ -187,13 +210,8 @@
 
   const params = new URLSearchParams(location.search);
   if (params.has("m")) {
-    const theirs = decode(params.get("m"));
-    const who = clean(params.get("n")) || "আপনার বন্ধু";
-    const el = $("friend");
-    const b = document.createElement("b");
-    b.textContent = who;
-    el.append(b, document.createTextNode(` ৬৪ জেলার ${bn(theirs.size)}টার বিখ্যাত খাবার খেয়েছে। আপনি কয়টা?`));
-    el.hidden = false;
+    friend = { who: clean(params.get("n")) || "আপনার বন্ধু", set: decode(params.get("m")) };
+    renderFriend();
   }
 
   const toast = msg => {
@@ -421,7 +439,11 @@
   });
 
   const fileName = () => "swad-map-" + state.eaten.size + ".png";
-  const caption = () => `আমি ৬৪ জেলার ${bn(state.eaten.size)}টার বিখ্যাত খাবার খেয়েছি — ${rankOf(state.eaten.size)}। আপনি কয়টা? ${shareUrl()}`;
+  const caption = () => {
+    const n = state.eaten.size;
+    const beat = friend && n > friend.set.size ? ` ${friend.who}-কে ${bn(n - friend.set.size)}টায় হারালাম।` : "";
+    return `আমি ৬৪ জেলার ${bn(n)}টার বিখ্যাত খাবার খেয়েছি — ${rankOf(n)}।${beat} আপনি কয়টা? ${shareUrl()}`;
+  };
 
   $("share").addEventListener("click", async () => {
     if (!blob) await render();
