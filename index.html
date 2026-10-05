@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>স্বাদের ম্যাপ — ৬৪ জেলার কয়টার বিখ্যাত খাবার খেয়েছেন?</title>
+<meta name="description" content="বগুড়ার দই থেকে নাটোরের কাঁচাগোল্লা — ৬৪ জেলার বিখ্যাত খাবারের কয়টা খেয়েছেন? টিক দিন, নিজের স্বাদের ম্যাপ বানিয়ে শেয়ার করুন।">
+<meta name="theme-color" content="#f4dfe0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="৬৪ জেলার কয়টার বিখ্যাত খাবার খেয়েছেন?">
+<meta property="og:description" content="টিক দিন, নিজের স্বাদের ম্যাপ বানিয়ে শেয়ার করুন। লগইন লাগে না।">
+<meta property="og:image" content="https://amimul1234.github.io/swad/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://amimul1234.github.io/swad/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wdth,wght@75..125,300..800&family=Tiro+Bangla&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="sheet">
+  <header class="mast">
+    <div class="mast-row">
+      <span class="memo-no">ক্যাশমেমো নং <b>০৬৪</b></span>
+      <span class="memo-date" id="today"></span>
+    </div>
+    <h1>স্বাদের ম্যাপ</h1>
+    <p class="mast-sub">৬৪ জেলার বিখ্যাত খাবারের কয়টা আপনার পেটে গেছে?</p>
+    <div class="friend" id="friend" hidden></div>
+  </header>
+
+  <section class="tally" aria-live="polite">
+    <div class="tally-num"><span id="count">০</span><small>/৬৪</small></div>
+    <div class="tally-side">
+      <div class="tally-title" id="rank">এখনো খাতা খালি</div>
+      <div class="tally-bar"><i id="bar"></i></div>
+    </div>
+  </section>
+
+  <section class="map-wrap">
+    <p class="hint">যে জেলার খাবার খেয়েছেন, ম্যাপে সেই জেলায় চাপুন — অথবা নিচের তালিকায় টিক দিন</p>
+    <svg id="map" role="group" aria-label="বাংলাদেশের ৬৪ জেলার ম্যাপ"></svg>
+    <div class="peek" id="peek" hidden></div>
+  </section>
+
+  <aside class="ad" data-slot="mid" hidden></aside>
+
+  <section class="ledger">
+    <div class="ledger-head">
+      <label class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>
+        <input id="q" type="search" placeholder="জেলা বা খাবার খুঁজুন" autocomplete="off">
+      </label>
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <footer class="foot">
+    <button class="link" id="clear" type="button">সব টিক মুছে নতুন করে শুরু করুন</button>
+    <p>প্রতিটা জেলার একটা খাবার — অনেক জেলার আরও আছে, জানি। তথ্যে ভুল পেলে জানান।</p>
+    <p>ম্যাপ: BBS / OCHA (geoBoundaries, CC BY 3.0 IGO)</p>
+  </footer>
+</div>
+
+<div class="dock">
+  <button class="stamp-btn" id="make" type="button">
+    <span id="makeLabel">আমার কার্ড বানাই</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+  </button>
+</div>
+
+<dialog id="sheet" class="card-sheet">
+  <form method="dialog" class="sheet-top">
+    <b>আপনার স্বাদের কার্ড</b>
+    <button class="x" aria-label="বন্ধ করুন">
+      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </form>
+  <div class="fields">
+    <label class="field">
+      <span>নাম</span>
+      <input id="name" maxlength="28" placeholder="আপনার নাম" autocomplete="name">
+    </label>
+    <label class="photo">
+      <input id="photo" type="file" accept="image/*" hidden>
+      <span class="photo-face" id="face">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="3.6"/><path d="M5 19.5c1.4-3.2 4-4.6 7-4.6s5.6 1.4 7 4.6"/></svg>
+      </span>
+      <span>ছবি</span>
+    </label>
+  </div>
+  <div class="preview"><img id="out" alt="আপনার স্বাদের কার্ড"></div>
+  <p class="save-hint" id="saveHint">ছবিতে চেপে ধরে রাখলেও সেভ হবে</p>
+  <div class="actions">
+    <button class="stamp-btn" id="share" type="button">শেয়ার করুন</button>
+    <button class="ghost wide" id="save" type="button">ডাউনলোড</button>
+    <button class="ghost wide" id="copy" type="button">লিংক কপি</button>
+  </div>
+  <aside class="ad" data-slot="sheet" hidden></aside>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="ads.js"></script>
+<script src="map.js"></script>
+<script src="foods.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
